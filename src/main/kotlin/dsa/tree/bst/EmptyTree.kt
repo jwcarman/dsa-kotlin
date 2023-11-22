@@ -1,6 +1,6 @@
 package dsa.tree.bst
 
-import dsa.common.EmptyIterator
+import dsa.common.iterator.EmptyIterator
 import dsa.tree.Tree
 
 internal class EmptyTree<T>(private val comparator: Comparator<T>) : Tree<T> {

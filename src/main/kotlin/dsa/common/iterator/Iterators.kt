@@ -1,4 +1,4 @@
-package dsa.common
+package dsa.common.iterator
 
 class EmptyIterator<T> : Iterator<T> {
     override fun hasNext(): Boolean = false

@@ -1,5 +1,6 @@
 package dsa.common
 
+import dsa.common.iterator.EmptyIterator
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test

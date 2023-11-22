@@ -1,7 +1,7 @@
 package dsa.tree.bst
 
-import dsa.common.ChainedIterator
-import dsa.common.SingletonIterator
+import dsa.common.iterator.ChainedIterator
+import dsa.common.iterator.SingletonIterator
 import dsa.tree.Tree
 
 internal class BinaryTree<T>(
