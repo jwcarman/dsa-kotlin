@@ -11,6 +11,7 @@ abstract class TreeNode<E>(
 ) : BinarySearchTree<E> {
 
     final override val size: Int = 1 + left.size + right.size
+
     final override val height: Int = 1 + maxOf(left.height, right.height)
 
     override fun add(element: E): BinarySearchTree<E> {
@@ -32,6 +33,7 @@ abstract class TreeNode<E>(
             else -> right.contains(element)
         }
     }
+
     override fun isEmpty(): Boolean = false
 
     override fun remove(element: E): BinarySearchTree<E> {

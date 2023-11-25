@@ -11,9 +11,11 @@ interface BinarySearchTree<T> : SelfTypedPersistentCollection<BinarySearchTree<T
     val value: T
 
     fun isLeftWeighted(): Boolean = left.height > right.height
+
     fun isRightWeighted(): Boolean = right.height > left.height
 
     companion object {
+
         fun <E : Comparable<E>> unbalanced(): BinarySearchTree<E> = unbalanced(Comparator.naturalOrder())
         fun <E> unbalanced(comparator: Comparator<E>): BinarySearchTree<E> = UnbalancedEmptyNode(comparator)
 
@@ -30,6 +32,7 @@ interface BinarySearchTree<T> : SelfTypedPersistentCollection<BinarySearchTree<T
             unbalanced(comparator).addAll(elements)
 
         fun <E : Comparable<E>> avl(): BinarySearchTree<E> = avl(Comparator.naturalOrder())
+
         fun <E> avl(comparator: Comparator<E>): BinarySearchTree<E> = AvlEmptyNode(comparator)
 
         fun <E : Comparable<E>> avlOf(vararg elements: E): BinarySearchTree<E> =

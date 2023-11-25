@@ -13,6 +13,9 @@ class AvlTreeNode<T>(
     left: BinarySearchTree<T>,
     right: BinarySearchTree<T>
 ) : TreeNode<T>(comparator, value, left, right) {
+
+    override fun emptyTree(comparator: Comparator<T>): BinarySearchTree<T> = AvlEmptyNode(comparator)
+
     override fun createSubtree(
         comparator: Comparator<T>,
         value: T,
@@ -34,21 +37,35 @@ class AvlTreeNode<T>(
         right: BinarySearchTree<T>
     ): BinarySearchTree<T> {
         return if (right.isRightWeighted()) {
-            AvlTreeNode(
-                comparator,
-                right.value,
-                AvlTreeNode(comparator, value, left, right.left),
-                right.right
-            )
+            leftLeftRotation(comparator, right, value, left)
         } else {
-            AvlTreeNode(
-                comparator,
-                right.left.value,
-                AvlTreeNode(comparator, value, left, right.left.left),
-                AvlTreeNode(comparator, right.value, right.left.right, right.right)
-            )
+            rightLeftRotation(comparator, right, value, left)
         }
     }
+
+    private fun <T> rightLeftRotation(
+        comparator: Comparator<T>,
+        right: BinarySearchTree<T>,
+        value: T,
+        left: BinarySearchTree<T>
+    ) = AvlTreeNode(
+        comparator,
+        right.left.value,
+        AvlTreeNode(comparator, value, left, right.left.left),
+        AvlTreeNode(comparator, right.value, right.left.right, right.right)
+    )
+
+    private fun <T> leftLeftRotation(
+        comparator: Comparator<T>,
+        right: BinarySearchTree<T>,
+        value: T,
+        left: BinarySearchTree<T>
+    ) = AvlTreeNode(
+        comparator,
+        right.value,
+        AvlTreeNode(comparator, value, left, right.left),
+        right.right
+    )
 
     private fun <T> rotateRight(
         comparator: Comparator<T>,
@@ -57,20 +74,34 @@ class AvlTreeNode<T>(
         right: BinarySearchTree<T>
     ): BinarySearchTree<T> {
         return if (left.isLeftWeighted()) {
-            AvlTreeNode(
-                comparator,
-                left.value,
-                left.left,
-                AvlTreeNode(comparator, value, left.right, right)
-            )
+            rightRightRotation(comparator, left, value, right)
         } else {
-            AvlTreeNode(
-                comparator,
-                left.right.value,
-                AvlTreeNode(comparator, left.value, left.left, left.right.left),
-                AvlTreeNode(comparator, value, left.right.right, right)
-            )
+            leftRightRotation(comparator, left, value, right)
         }
     }
-    override fun emptyTree(comparator: Comparator<T>): BinarySearchTree<T> = AvlEmptyNode(comparator)
+
+    private fun <T> leftRightRotation(
+        comparator: Comparator<T>,
+        left: BinarySearchTree<T>,
+        value: T,
+        right: BinarySearchTree<T>
+    ) = AvlTreeNode(
+        comparator,
+        left.right.value,
+        AvlTreeNode(comparator, left.value, left.left, left.right.left),
+        AvlTreeNode(comparator, value, left.right.right, right)
+    )
+
+    private fun <T> rightRightRotation(
+        comparator: Comparator<T>,
+        left: BinarySearchTree<T>,
+        value: T,
+        right: BinarySearchTree<T>
+    ) = AvlTreeNode(
+        comparator,
+        left.value,
+        left.left,
+        AvlTreeNode(comparator, value, left.right, right)
+    )
+
 }
