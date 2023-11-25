@@ -2,8 +2,6 @@ package dsa.tree.binary.unbalanced
 
 import dsa.tree.binary.AbstractBinaryTreeTest
 import dsa.tree.binary.BinarySearchTree
-import io.kotest.matchers.collections.shouldContainExactly
-import org.junit.jupiter.api.Test
 
 class UnbalancedTreeTest: AbstractBinaryTreeTest() {
 
@@ -20,10 +18,4 @@ class UnbalancedTreeTest: AbstractBinaryTreeTest() {
 
     override fun <T> treeFrom(comparator: Comparator<T>, values: Collection<T>): BinarySearchTree<T> =
         BinarySearchTree.unbalancedFrom(comparator, values)
-
-    @Test
-    fun removeWithLeftAndRightChildrenShouldReplaceWithMinimumSuccessor() {
-        val bst = BinarySearchTree.unbalancedOf(2, 1, -1, 6, 3).remove(2)
-        bst.shouldContainExactly(-1, 1, 3, 6)
-    }
 }

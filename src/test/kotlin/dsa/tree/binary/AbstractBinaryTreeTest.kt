@@ -270,4 +270,10 @@ abstract class AbstractBinaryTreeTest {
         val tree = treeOf(Comparator.comparing { it.uppercase() }, "one", "two", "three")
         tree.shouldContainExactly("one", "three", "two")
     }
+
+    @Test
+    fun `removing from node with both children should replace with minimum successor`() {
+        val tree = treeOf(2, 1, -1, 6, 3).remove(2)
+        tree.shouldContainExactly(-1, 1, 3, 6)
+    }
 }
