@@ -8,13 +8,13 @@ import org.junit.jupiter.api.Test
 class EmptyIteratorTest {
     @Test
     fun shouldNotHaveNext() {
-        val iterator = EmptyIterator<Int>()
+        val iterator = EmptyIterator
         iterator.hasNext() shouldBe false
     }
 
     @Test
     fun nextShouldThrowNoSuchElementException() {
-        val iterator = EmptyIterator<Int>()
+        val iterator = EmptyIterator
         shouldThrow<NoSuchElementException> { iterator.next() }
     }
 }

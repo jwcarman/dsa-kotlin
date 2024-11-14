@@ -14,16 +14,16 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.code.style>official</kotlin.code.style>
         <kotlin.compiler.jvmTarget>21</kotlin.compiler.jvmTarget>
-        <kotlin.version>1.9.20</kotlin.version>
+        <kotlin.version>2.0.21</kotlin.version>
 
-        <junit.version>5.10.1</junit.version>
-        <kotest.version>5.8.0</kotest.version>
+        <junit.version>5.11.3</junit.version>
+        <kotest.version>5.9.1</kotest.version>
 
         <maven.plugin.validation>VERBOSE</maven.plugin.validation>
 
-        <surefire.plugin.version>3.2.2</surefire.plugin.version>
-        <failsafe.plugin.version>3.2.2</failsafe.plugin.version>
-        <kotlinx-collections-immutable.version>0.3.6</kotlinx-collections-immutable.version>
+        <surefire.plugin.version>3.5.2</surefire.plugin.version>
+        <failsafe.plugin.version>3.5.2</failsafe.plugin.version>
+        <kotlinx-collections-immutable.version>0.3.8</kotlinx-collections-immutable.version>
     </properties>
 
     <build>

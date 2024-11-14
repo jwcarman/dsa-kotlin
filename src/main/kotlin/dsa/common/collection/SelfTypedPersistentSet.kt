@@ -1,10 +1,8 @@
 package dsa.common.collection
 
-import kotlinx.collections.immutable.PersistentCollection
+import kotlinx.collections.immutable.PersistentSet
 
-
-interface SelfTypedPersistentCollection<S: SelfTypedPersistentCollection<S, E>, E>: PersistentCollection<E> {
-
+interface SelfTypedPersistentSet<S: SelfTypedPersistentSet<S, E>, E>: PersistentSet<E> {
     override fun add(element: E): S
     override fun clear(): S
     override fun remove(element: E): S
@@ -21,5 +19,5 @@ interface SelfTypedPersistentCollection<S: SelfTypedPersistentCollection<S, E>, 
 
     override fun removeAll(predicate: (E) -> Boolean): S = removeAll(filter { e -> predicate.invoke(e) }.toList())
 
-    override fun builder(): PersistentCollection.Builder<E> = throw UnsupportedOperationException("Builder not supported")
+    override fun builder(): PersistentSet.Builder<E> = throw UnsupportedOperationException("Builder not supported")
 }

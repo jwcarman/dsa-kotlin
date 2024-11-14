@@ -1,9 +1,11 @@
 package dsa.common.iterator
 
-class EmptyIterator<T> : Iterator<T> {
+object EmptyIterator : Iterator<Nothing> {
     override fun hasNext(): Boolean = false
-    override fun next(): T = throw NoSuchElementException()
+
+    override fun next(): Nothing = throw NoSuchElementException()
 }
+
 
 class SingletonIterator<T>(private val value: T) : Iterator<T> {
     private var exhausted = false

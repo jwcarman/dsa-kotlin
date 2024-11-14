@@ -4,7 +4,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import org.junit.jupiter.api.Test
 
-class BlackNodeTest {
+class BlackSearchTreeNodeTest {
 
     @Test
     fun `black node should be black`() {

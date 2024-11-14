@@ -28,7 +28,7 @@ class NilNode<E> : Node<E> {
     override val blackHeight: Int
         get() = 0
 
-    override fun iterator(): Iterator<E> = EmptyIterator()
+    override fun iterator(): Iterator<E> = EmptyIterator
 
     override fun toBlack(): Node<E> = this
 
