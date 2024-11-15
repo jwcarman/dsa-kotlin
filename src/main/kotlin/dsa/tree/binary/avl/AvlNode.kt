@@ -2,7 +2,7 @@ package dsa.tree.binary.avl
 
 interface AvlNode<E> : Iterable<E> {
 
-    val element: E
+    val value: E
     val left: AvlNode<E>
     val right: AvlNode<E>
     val size: Int

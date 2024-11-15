@@ -102,6 +102,7 @@ abstract class BinaryTreeTest {
         val tree = factory().create<String>()
             .add("foo")
             .add("bar")
+            .add("zoo")
         tree.contains("bar") shouldBe true
     }
 
@@ -109,6 +110,7 @@ abstract class BinaryTreeTest {
     fun `should contain element to right of root`() {
         val tree = factory().create<String>()
             .add("foo")
+            .add("bar")
             .add("zoo")
         tree.contains("zoo") shouldBe true
     }
@@ -156,10 +158,11 @@ abstract class BinaryTreeTest {
     fun `should be able to remove element to the right of root`() {
         val tree = factory().create<String>()
             .add("foo")
+            .add("bar")
             .add("zoo")
             .remove("zoo")
-        tree.size shouldBe 1
-        tree.toList() shouldBe listOf("foo")
+        tree.size shouldBe 2
+        tree.toList() shouldBe listOf("bar", "foo")
     }
 
     @Test

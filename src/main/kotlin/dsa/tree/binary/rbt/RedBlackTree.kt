@@ -1,27 +1,28 @@
 package dsa.tree.binary.rbt
 
-import dsa.common.collection.SelfTypedPersistentCollection
+import dsa.common.collection.SelfTypedPersistentSet
+import dsa.tree.PersistentSetFactory
+import kotlinx.collections.immutable.PersistentSet
 
-class RedBlackTree<E> private constructor(internal val root: Node<E>, internal val comparator: Comparator<E>) :
-    SelfTypedPersistentCollection<RedBlackTree<E>, E> {
+class RedBlackTree<E> private constructor(private val root: RedBlackNode<E>, private val comparator: Comparator<E>) :
+    SelfTypedPersistentSet<RedBlackTree<E>, E> {
 
     private constructor(comparator: Comparator<E>) : this(NilNode(), comparator)
 
-    companion object {
-        fun <E : Comparable<E>> create() = RedBlackTree(Comparator.naturalOrder<E>())
-        fun <E> create(comparator: Comparator<E>) = RedBlackTree(comparator)
+    companion object : PersistentSetFactory {
+        override fun <E> create(comparator: Comparator<E>): PersistentSet<E> = RedBlackTree(comparator)
+        override fun <E : Comparable<E>> create(): PersistentSet<E> = RedBlackTree(Comparator.naturalOrder())
     }
 
     override val size: Int
         get() = root.size
 
-    override fun add(element: E): RedBlackTree<E> = RedBlackTree(root.insert(element, comparator).toBlack(), comparator)
+    override fun add(element: E): RedBlackTree<E> = RedBlackTree(root.add(element, comparator).toBlack(), comparator)
 
     override fun clear(): RedBlackTree<E> = RedBlackTree(comparator)
 
-    override fun remove(element: E): RedBlackTree<E> {
-        TODO("Not yet implemented")
-    }
+    override fun remove(element: E): RedBlackTree<E> =
+        RedBlackTree(root.remove(element, comparator).toBlack(), comparator)
 
     override fun contains(element: E): Boolean = root.contains(element, comparator)
 

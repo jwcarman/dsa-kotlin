@@ -8,7 +8,7 @@ private const val LEFT_UNBALANCED = -2
 
 
 class AvlInnerNode<E>(
-    override val element: E,
+    override val value: E,
     override val left: AvlNode<E>,
     override val right: AvlNode<E>
 ) : AvlNode<E> {
@@ -17,10 +17,10 @@ class AvlInnerNode<E>(
     override val height: Int = 1 + maxOf(left.height, right.height)
 
     override fun iterator(): Iterator<E> =
-        ChainedIterator(left.iterator(), SingletonIterator(element), right.iterator())
+        ChainedIterator(left.iterator(), SingletonIterator(value), right.iterator())
 
     override fun contains(element: E, comparator: Comparator<E>): Boolean {
-        val comparison = comparator.compare(element, this.element)
+        val comparison = comparator.compare(element, this.value)
         return when {
             comparison == 0 -> true
             comparison > 0 -> right.contains(element, comparator)
@@ -29,21 +29,21 @@ class AvlInnerNode<E>(
     }
 
     override fun add(element: E, comparator: Comparator<E>): AvlNode<E> {
-        val comparison = comparator.compare(element, this.element)
+        val comparison = comparator.compare(element, this.value)
         return when {
             comparison == 0 -> this
-            comparison > 0 -> AvlInnerNode(this.element, left, right.add(element, comparator)).rebalance()
-            else -> AvlInnerNode(this.element, left.add(element, comparator), right).rebalance()
+            comparison > 0 -> AvlInnerNode(this.value, left, right.add(element, comparator)).rebalance()
+            else -> AvlInnerNode(this.value, left.add(element, comparator), right).rebalance()
         }
     }
 
 
     override fun remove(element: E, comparator: Comparator<E>): AvlNode<E> {
-        val comparison = comparator.compare(element, this.element)
+        val comparison = comparator.compare(element, this.value)
         return when {
             comparison == 0 -> removeSelf(comparator).rebalance()
-            comparison > 0 -> AvlInnerNode(this.element, left, right.remove(element, comparator)).rebalance()
-            else -> AvlInnerNode(this.element, left.remove(element, comparator), right).rebalance()
+            comparison > 0 -> AvlInnerNode(this.value, left, right.remove(element, comparator)).rebalance()
+            else -> AvlInnerNode(this.value, left.remove(element, comparator), right).rebalance()
         }
     }
 
@@ -76,14 +76,14 @@ class AvlInnerNode<E>(
     }
 
     private fun rightLeftRotation(): AvlNode<E> = AvlInnerNode(
-        right.left.element,
-        AvlInnerNode(element, left, right.left.left),
-        AvlInnerNode(right.element, right.left.right, right.right)
+        right.left.value,
+        AvlInnerNode(value, left, right.left.left),
+        AvlInnerNode(right.value, right.left.right, right.right)
     )
 
     private fun leftLeftRotation(): AvlNode<E> = AvlInnerNode(
-        right.element,
-        AvlInnerNode(element, left, right.left),
+        right.value,
+        AvlInnerNode(value, left, right.left),
         right.right
     )
 
@@ -96,15 +96,15 @@ class AvlInnerNode<E>(
     }
 
     private fun leftRightRotation(): AvlNode<E> = AvlInnerNode(
-        left.right.element,
-        AvlInnerNode(left.element, left.left, left.right.left),
-        AvlInnerNode(element, left.right.right, right)
+        left.right.value,
+        AvlInnerNode(left.value, left.left, left.right.left),
+        AvlInnerNode(value, left.right.right, right)
     )
 
     private fun rightRightRotation(): AvlNode<E> = AvlInnerNode(
-        left.element,
+        left.value,
         left.left,
-        AvlInnerNode(element, left.right, right)
+        AvlInnerNode(value, left.right, right)
     )
 
 }

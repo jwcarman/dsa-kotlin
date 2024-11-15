@@ -4,7 +4,7 @@ import dsa.common.iterator.EmptyIterator
 
 class AvlEmptyNode<E> : AvlNode<E> {
 
-    override val element: E
+    override val value: E
         get() = throw NoSuchElementException("Empty nodes contain no value.")
 
     override val left: AvlNode<E>
