@@ -3,6 +3,7 @@ package dsa.tree.binary.rbt
 import dsa.common.iterator.ChainedIterator
 import dsa.common.iterator.SingletonIterator
 import dsa.tree.binary.rbt.RedBlackNode.Color.BLACK
+import dsa.tree.binary.rbt.RedBlackNode.Color.RED
 
 class InnerNode<E>(
     override val color: RedBlackNode.Color,
@@ -23,17 +24,75 @@ class InnerNode<E>(
 
     override fun add(element: E, comparator: Comparator<E>): RedBlackNode<E> {
         val comparison = comparator.compare(element, value)
-        val newNode = when {
+        return when {
             comparison == 0 -> this
             comparison < 0 -> addToLeft(element, comparator)
             else -> addToRight(element, comparator)
         }
-        return newNode.balance()
     }
 
-    private fun addToRight(element: E, comparator: Comparator<E>) = copy(right = right.add(element, comparator))
+    private fun addToRight(element: E, comparator: Comparator<E>): RedBlackNode<E> {
+        val uncle = left
+        val parent = right.add(element, comparator)
 
-    private fun addToLeft(element: E, comparator: Comparator<E>) = copy(left = left.add(element, comparator))
+        return when {
+            isRed() -> copy(right = parent)
+            parent.isBlack() -> copy(right = parent)
+            uncle.isRed() and (parent.left.isRed() or parent.right.isRed()) -> copy(
+                color = RED,
+                left = left.toBlack(),
+                right = parent.toBlack()
+            )
+
+            uncle.isBlack() and parent.right.isRed() -> InnerNode(
+                BLACK,
+                parent.value,
+                InnerNode(RED, value, left, parent.left),
+                parent.right
+            )
+
+            uncle.isBlack() and parent.left.isRed() -> InnerNode(
+                BLACK,
+                parent.left.value,
+                InnerNode(RED, value, left, parent.left.left),
+                InnerNode(RED, parent.value, parent.left.right, parent.right)
+            )
+
+            else -> copy(right = parent)
+        }
+
+    }
+
+    private fun addToLeft(element: E, comparator: Comparator<E>): RedBlackNode<E> {
+        val uncle = right
+        val parent = left.add(element, comparator)
+
+        return when {
+            isRed() -> copy(left = parent)
+            parent.isBlack() -> copy(left = parent)
+            uncle.isRed() and (parent.left.isRed() or parent.right.isRed()) -> copy(
+                color = RED,
+                left = parent.toBlack(),
+                right = right.toBlack()
+            )
+
+            uncle.isBlack() and parent.left.isRed() -> InnerNode(
+                BLACK,
+                parent.value,
+                parent.left,
+                InnerNode(RED, value, parent.right, right)
+            )
+
+            uncle.isBlack() and parent.right.isRed() -> InnerNode(
+                BLACK,
+                parent.right.value,
+                InnerNode(RED, parent.value, parent.left, parent.right.left),
+                InnerNode(RED, value, parent.right.right, right)
+            )
+
+            else -> copy(left = parent)
+        }
+    }
 
     override fun balance(): RedBlackNode<E> {
         return when {

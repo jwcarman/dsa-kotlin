@@ -21,6 +21,7 @@ interface RedBlackNode<E> : Iterable<E> {
     val blackHeight: Int
 
     fun isRed(): Boolean = color == Color.RED
+    fun isBlack(): Boolean = color == Color.BLACK
 
     fun isNil(): Boolean
     fun toBlack(): RedBlackNode<E>
